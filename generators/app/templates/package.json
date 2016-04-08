@@ -1,0 +1,11 @@
+{
+  "name": "Appname",
+  "private": false,
+  "scripts": {
+    "start": "meteor -p 8000 --settings imports/startup/server/development/settings.json",
+    "production": "meteor -p 8000 --settings imports/startup/server/production/settings.json"
+  },
+  "dependencies": {
+
+  }
+}
