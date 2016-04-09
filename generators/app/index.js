@@ -13,7 +13,7 @@ const path = require('path');
 module.exports = yeoman.Base.extend({
 
   builder() {
-    yeoman.generators.Base.apply(this, arguments);
+    yeoman.Base.apply(this, arguments);
     // appname flag
     this.argument('appname', { type: String, required: false });
     // set appname from argument-defined appname or get the path
