@@ -20,7 +20,6 @@
   ],
   "dependencies": {
     "chalk": "^1.0.0",
-    "eslint-plugin-react": "^4.3.0",
     "yeoman-generator": "^0.22.0",
     "yosay": "^1.0.2"
   },
@@ -30,6 +29,7 @@
     "eslint-config-xo-space": "^0.10.0",
     "eslint-plugin-react": "^4.3.0",
     "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.2",
     "gulp-coveralls": "^0.1.0",
     "gulp-eslint": "^2.0.0",
     "gulp-exclude-gitignore": "^1.0.0",

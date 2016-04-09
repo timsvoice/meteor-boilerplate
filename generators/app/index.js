@@ -5,14 +5,15 @@
 
 'use strict';
 
-var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var path = require('path');
+const yeoman = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const path = require('path');
 
 module.exports = yeoman.Base.extend({
 
-  constructor() {
-    yeoman.Base.apply(this, arguments);
+  builder() {
+    yeoman.generators.Base.apply(this, arguments);
     // appname flag
     this.argument('appname', { type: String, required: false });
     // set appname from argument-defined appname or get the path
@@ -39,7 +40,7 @@ module.exports = yeoman.Base.extend({
     // Have Yeoman greet the user.
     this.log(
       yosay(
-        'Welcome to the polished Meteor 1.3 Boilerplate generator!'
+        `Welcome to the polished ${chalk.red('Meteor 1.3 Boilerplate')} generator!`
         )
       );
 

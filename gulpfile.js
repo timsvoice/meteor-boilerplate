@@ -2,6 +2,7 @@
 const path = require('path');
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
+const babel = require("gulp-babel");
 const excludeGitignore = require('gulp-exclude-gitignore');
 const mocha = require('gulp-mocha');
 const istanbul = require('gulp-istanbul');
@@ -13,6 +14,7 @@ gulp.task('static', function () {
   return gulp.src('**/*.js')
     .pipe(excludeGitignore())
     .pipe(eslint())
+    .pipe(babel())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
@@ -24,6 +26,7 @@ gulp.task('nsp', function (cb) {
 gulp.task('pre-test', function () {
   return gulp.src('generators/**/*.js')
     .pipe(excludeGitignore())
+    .pipe(babel())
     .pipe(istanbul({
       includeUntested: true
     }))
@@ -35,6 +38,7 @@ gulp.task('test', ['pre-test'], function (cb) {
 
   gulp.src('test/**/*.js')
     .pipe(plumber())
+    .pipe(babel())
     .pipe(mocha({reporter: 'spec'}))
     .on('error', function (err) {
       mochaErr = err;
