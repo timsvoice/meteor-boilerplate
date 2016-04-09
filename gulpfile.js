@@ -10,11 +10,16 @@ const nsp = require('gulp-nsp');
 const plumber = require('gulp-plumber');
 const coveralls = require('gulp-coveralls');
 
+// Babel paths
+const paths = [
+  'generators/app/index.es6',
+]
+
+
 gulp.task('static', function () {
   return gulp.src('**/*.js')
     .pipe(excludeGitignore())
     .pipe(eslint())
-    .pipe(babel())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
@@ -26,7 +31,6 @@ gulp.task('nsp', function (cb) {
 gulp.task('pre-test', function () {
   return gulp.src('generators/**/*.js')
     .pipe(excludeGitignore())
-    .pipe(babel())
     .pipe(istanbul({
       includeUntested: true
     }))
@@ -38,7 +42,6 @@ gulp.task('test', ['pre-test'], function (cb) {
 
   gulp.src('test/**/*.js')
     .pipe(plumber())
-    .pipe(babel())
     .pipe(mocha({reporter: 'spec'}))
     .on('error', function (err) {
       mochaErr = err;
@@ -62,5 +65,11 @@ gulp.task('coveralls', ['test'], function () {
     .pipe(coveralls());
 });
 
+gulp.task('compile', function () {
+  return gulp.src('generators/**/*.es6')
+    .pipe(babel())
+    .pipe(gulp.dest('generators'));
+})
+
 gulp.task('prepublish', ['nsp']);
-gulp.task('default', ['static', 'test', 'coveralls']);
+gulp.task('default', ['static', 'test', 'coveralls', 'compile']);

@@ -2,79 +2,88 @@
 // run meteor create this.appname
 // need to remove created scaffolding in favor of our own
 
+
 'use strict';
 
-var _yeomanGenerator = require('yeoman-generator');
+import generator from 'yeoman-generator';
+import chalk from 'chalk';
+import yosay from 'yosay';
+import path from 'path';
 
-var _yeomanGenerator2 = _interopRequireDefault(_yeomanGenerator);
+module.exports = generator.Base.extend({
 
-var _chalk = require('chalk');
-
-var _chalk2 = _interopRequireDefault(_chalk);
-
-var _yosay = require('yosay');
-
-var _yosay2 = _interopRequireDefault(_yosay);
-
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = _yeomanGenerator2.default.Base.extend({
-  constructor: function constructor() {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _yeomanGenerator2.default.Base.apply(this, arguments);
+  constructor(...args) {
+    generator.Base.apply(this, arguments);
     // appname flag
     this.argument('appname', { type: String, required: false });
     // set appname from argument-defined appname or get the path
-    this.appname = this.appname || _path2.default.basename(process.cwd());
+    this.appname = this.appname || path.basename(process.cwd());
     // standard packages for any meteor app
-    this.packages = ['meteor-base', 'mobile-experience', 'mongo', 'blaze-html-templates', 'session', 'jquery', 'tracker', 'standard-minifiers', 'es5-shim', 'ecmascript', 'accounts-password', 'useraccounts:core'];
+    this.packages = [
+      'meteor-base',
+      'mobile-experience',
+      'mongo',
+      'blaze-html-templates',
+      'session',
+      'jquery',
+      'tracker',
+      'standard-minifiers',
+      'es5-shim',
+      'ecmascript',
+      'accounts-password',
+      'useraccounts:core',
+    ];
   },
-  prompting: function prompting() {
-    var _this = this;
 
-    var done = this.async();
+  prompting() {
+    const done = this.async();
     // Have generator greet the user.
-    this.log((0, _yosay2.default)('Welcome to the polished ' + _chalk2.default.red('Meteor 1.3 Boilerplate') + ' generator!'));
+    this.log(
+      yosay(
+        `Welcome to the polished ${chalk.red('Meteor 1.3 Boilerplate')} generator!`
+        )
+      );
 
-    var prompts = [{
+    const prompts = [{
       type: 'input',
       name: 'name',
       message: 'Name: What would you like to call your app?',
-      default: this.appname
+      default: this.appname,
     }, {
       type: 'list',
       name: 'rendering',
       message: 'Render Engine: Which rendering engine would you like to use?',
-      choices: ['Blaze', 'React', 'Other'],
-      default: 'Blaze'
+      choices: [
+        'Blaze',
+        'React',
+        'Other',
+      ],
+      default: 'Blaze',
     }, {
       type: 'confirm',
       name: 'lint',
       message: 'ESLint: Would you like to configure this project with the AirBnB ESLint module?',
-      default: true
+      default: true,
     }, {
       type: 'list',
       name: 'frontend',
       message: 'Frontend: Do you use any of these frontend frameworks??',
-      choices: ['Foundation', 'Nope'],
-      default: 'Foundation'
+      choices: [
+        'Foundation',
+        'Nope',
+      ],
+      default: 'Foundation',
     }];
 
-    this.prompt(prompts, function (answers) {
-      _this.answers = answers;
+    this.prompt(prompts, answers => {
+      this.answers = answers;
       // To access answers later use this.answers.someAnswer;
       done();
-      return _this.answers;
+      return this.answers;
     });
   },
-  scaffolding: function scaffolding() {
+
+  scaffolding() {
     this.mkdir('client');
     this.mkdir('public');
     this.mkdir('server');
@@ -91,25 +100,60 @@ module.exports = _yeomanGenerator2.default.Base.extend({
     this.mkdir('imports/startup/server/development');
     this.mkdir('imports/startup/server/production');
   },
-  writing: function writing() {
+
+  writing() {
     // context for template processing
     // const context = {
     //   appname: this.answers.name,
     // };
 
-    this.copy('.meteor/release', '.meteor/release');
-    this.copy('package.json', 'package.json');
-    this.copy('client/main.js', 'client/main.js');
-    this.copy('server/main.js', 'server/main.js');
-    this.copy('imports/startup/client/index.js', 'imports/startup/client/index.js');
-    this.copy('imports/startup/client/routes.js', 'imports/startup/client/routes.js');
-    this.copy('imports/startup/client/accounts-config.js', 'imports/startup/client/accounts-config.js');
-    this.copy('imports/startup/server/index.js', 'imports/startup/server/index.js');
-    this.copy('imports/startup/server/fixtures.js', 'imports/startup/server/fixtures.js');
-    this.copy('imports/startup/server/development/settings.json', 'imports/startup/server/development/settings.json');
-    this.copy('imports/startup/server/production/settings.json', 'imports/startup/server/production/settings.json');
+    this.copy(
+      '.meteor/release',
+      '.meteor/release'
+    );
+    this.copy(
+      'package.json',
+      'package.json'
+    );
+    this.copy(
+      'client/main.js',
+      'client/main.js'
+    );
+    this.copy(
+      'server/main.js',
+      'server/main.js'
+    );
+    this.copy(
+      'imports/startup/client/index.js',
+      'imports/startup/client/index.js'
+    );
+    this.copy(
+      'imports/startup/client/routes.js',
+      'imports/startup/client/routes.js'
+    );
+    this.copy(
+      'imports/startup/client/accounts-config.js',
+      'imports/startup/client/accounts-config.js'
+    );
+    this.copy(
+      'imports/startup/server/index.js',
+      'imports/startup/server/index.js'
+    );
+    this.copy(
+      'imports/startup/server/fixtures.js',
+      'imports/startup/server/fixtures.js'
+    );
+    this.copy(
+      'imports/startup/server/development/settings.json',
+      'imports/startup/server/development/settings.json'
+    );
+    this.copy(
+      'imports/startup/server/production/settings.json',
+      'imports/startup/server/production/settings.json'
+    );
   },
-  meteorPackages: function meteorPackages() {
+
+  meteorPackages() {
     // install a rendering engine
     switch (this.answers.rendering) {
       case 'Blaze':
@@ -130,7 +174,8 @@ module.exports = _yeomanGenerator2.default.Base.extend({
     // add selected packages to Meteor
     this.write('.meteor/packages', this.packages.join('\n'));
   },
-  installNpm: function installNpm() {
+
+  installNpm() {
     // Install a front end framework
     switch (this.answers.frontend) {
       case 'Foundation':
@@ -152,5 +197,6 @@ module.exports = _yeomanGenerator2.default.Base.extend({
     }
     // install npm dependencies
     this.npmInstall();
-  }
+  },
+
 });
